@@ -1,0 +1,92 @@
+<!-- Do not use, Does not work, need to update | For testing -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ML Processing</title>
+    <style>
+      #status_indicator {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ML Processing</h1>
+    <div id="status_indicator">Server Status: Unknown</div>
+    <ul id="messages"></ul>
+    <form onsubmit="sendMessage(); return false;">
+      <input id="message_input" autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+      var socket = io.connect(
+        "http://" + document.domain + ":" + location.port
+      );
+
+      socket.on("server_status", function (data) {
+        var statusIndicator = document.getElementById("status_indicator");
+        var ul = document.getElementById("messages");
+
+        statusIndicator.textContent = "Server Status: " + data.status;
+
+        li = document.createElement("li");
+        li.appendChild(
+          document.createTextNode("Number of Users: " + data.no_of_users)
+        );
+        ul.appendChild(li);
+      });
+
+      socket.on("user_info", function (data) {
+        var ul = document.getElementById("messages");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("User ID: " + data.user_id));
+        ul.appendChild(li);
+
+        li = document.createElement("li");
+        li.appendChild(document.createTextNode("User Number: " + data.user_no));
+        ul.appendChild(li);
+
+        li = document.createElement("li");
+
+        if (data.jobs) {
+          var jobs = data.jobs;
+          var jobsStr = "Jobs: ";
+          for (var i = 0; i < jobs.length; i++) {
+            jobsStr += "Job " + (i + 1) + ": " + jobs[i] + ", ";
+          }
+          li.appendChild(document.createTextNode(jobsStr));
+        } else {
+          li.appendChild(document.createTextNode("Jobs: None"));
+        }
+        ul.appendChild(li);
+
+        li = document.createElement("li");
+        li.appendChild(document.createTextNode("Connected: " + data.connected));
+        ul.appendChild(li);
+
+        console.log(data);
+      });
+
+      socket.on("message", function (msg) {
+        var ul = document.getElementById("messages");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(msg));
+        ul.appendChild(li);
+
+        console.log(msg);
+      });
+
+      function sendMessage() {
+        var messageInput = document.getElementById("message_input");
+        var message = messageInput.value;
+        socket.emit("message", message);
+        messageInput.value = "";
+      }
+    </script>
+  </body>
+</html>

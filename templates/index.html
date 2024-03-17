@@ -1,0 +1,39 @@
+<!-- Do not use, Does not work, need to update | For testing -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Updates</title>
+  </head>
+  <body>
+    <form onsubmit="event.preventDefault(); sendMessage();">
+      <h1>Live Updates</h1>
+      <ul id="messages"></ul>
+      <input id="message_input" autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+      var socket = io.connect(
+        "http://" + document.domain + ":" + location.port
+      );
+
+      socket.on("message", function (msg) {
+        var ul = document.getElementById("messages");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(msg));
+        ul.appendChild(li);
+      });
+
+      function sendMessage() {
+        var messageInput = document.getElementById("message_input");
+        var message = messageInput.value;
+        socket.emit("message", message);
+        messageInput.value = "";
+      }
+    </script>
+  </body>
+</html>
