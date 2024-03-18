@@ -12,6 +12,10 @@ An AI text/content detection model that uses GPT-4, DebertaModel and other techn
 # clone the repository
 git clone
 
+# Download weights (~6GB)
+https://www.mediafire.com/file/byct4m37gdvs36n/weights.7z/file
+# extract and place under weights folder
+
 # navigate to the project directory
 cd AI-Generated-Text-Detection
 

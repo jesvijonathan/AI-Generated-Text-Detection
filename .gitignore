@@ -1,19 +1,27 @@
 data/profanity_en.csv
 __pycache__/
 
-model/debertalarge/*
-model/debertav3base/*
-model/debertav3large/*
-model/debertav3small/*
-model/debertav3xsmall/*
-model/robertalarge/*
+# model
+# model/debertalarge/*
+# model/debertav3base/*
+# model/debertav3large/*
+# model/debertav3small/*
+# model/debertav3xsmall/*
+# model/robertalarge/*
 
+# environment
 nig/*
-weights/17_ft1/*
-weights/17_ft103/*
-weights/19_ft1/*
-weights/19_ft103/*
-weights/20_ft1/*
-weights/20_ft103/*
 
+# weights, size too big to uppload to git lfs (download from https://www.mediafire.com/file/byct4m37gdvs36n/weights.7z/file)
+weights/17_ft1/weights_ep0
+weights/17_ft103/weights_ep0
+weights/19_ft1/weights_ep0
+weights/19_ft103/weights_ep0
+weights/20_ft1/weights_ep0
+weights/20_ft103/weights_ep0
+weights/weights.7z
+
+
+# Test automation files
 t.bat
+
