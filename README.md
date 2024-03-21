@@ -10,11 +10,14 @@ An AI text/content detection model that uses GPT-4, DebertaModel and other techn
 
 ```bash
 # clone the repository
-git clone
+git clone https://github.com/jesvijonathan/AI-Generated-Text-Detection
 
-# Download weights (~6GB)
-https://www.mediafire.com/file/byct4m37gdvs36n/weights.7z/file
-# extract and place under weights folder
+# Download weights (~9GB)
+# Link : https://www.mediafire.com/file/7n4b2e1geeuzu69/weights.zip/file
+wget https://www.mediafire.com/file/7n4b2e1geeuzu69/weights.zip/file -O weights.zip
+
+# extract and place under weights folder, compressed using 7z (Ultra settings)
+7z x weights.zip
 
 # navigate to the project directory
 cd AI-Generated-Text-Detection
@@ -27,7 +30,9 @@ source env/bin/activate
 
 # install the required packages
 pip install -r packages.txt
-# you require gpu/cuda version of tensorflow/torch and cuda drivers to run the model
+# you require gpu/cuda version of tensorflow/torch and cuda drivers to run the model in gpu mode
+# In my case : pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+# & gpu drivers from nvidia : https://developer.nvidia.com/cuda-toolkit
 
 # run the main.py file
 python app.py
@@ -41,8 +46,8 @@ python app.py
 - This project works best with text with more than 250 characters & is trained on lengthy texts & using bert/DebertaModel along with 3M GPT-4 Data.
 - Use this project along with the frontend interface intended to use with this project, which has visualization & more | [Snitch-GPT](https://snitch-gpt.vercel.app)
 - Adjust the params in the config.py file best, as per need
-- The model is trained on a custom dataset and results are inaccurate & is not perfect, use it at your own risk.
-- I know the code is speghetti but it works, will refactor soon.
+- The model is trained on a custom dataset and results maybe inaccurate & is not always perfect, use it at your own risk.
+- I know it's speghetti code rn, but it works. Will refactor soon.
 
 ## License
 
@@ -51,3 +56,4 @@ python app.py
 ## Contributors
 
 - [Jesvi Jonathan](jesvi22j@gmail.com)
+-

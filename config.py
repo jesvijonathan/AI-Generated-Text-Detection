@@ -2,21 +2,21 @@
 max_len = 768
 sortby="Sno" # ["Sno", "Model", "Device", "Prediction", "Execution Time"]
 
-random_sel = 2
+random_sel = -1 # -1 for all
 num_parallel = 2
 paths_weights=[
         ('./models/debertav3large', './weights/17_ft1/weights_ep0',   
          1, "gpu"),
         ('./models/debertav3large', './weights/17_ft103/weights_ep0', 
-         0, "gpu"),
+         1, "gpu"),
         ('./models/debertav3large', './weights/19_ft1/weights_ep0',   
-         0, "cpu"), #acc
+         1, "cpu"), #acc
         ('./models/debertav3large', './weights/19_ft103/weights_ep0', 
-         0, "cpu"), #acc
+         1, "cpu"), #acc
         ('./models/debertalarge',   './weights/20_ft1/weights_ep0',   
          1, "gpu"),
         ('./models/debertalarge',   './weights/20_ft103/weights_ep0', 
-         0, "cpu"),
+         1, "cpu"),
     ]
 
 sentiment_weight = 1.0
