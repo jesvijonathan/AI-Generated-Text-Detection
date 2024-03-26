@@ -1,8 +1,6 @@
 # AI-Generated-Text-Detection
 
-This is gonna be revolutionary, will update soon :)
-
-## About
+This is most relavant project in the current era and the future, as this project aims to solve one of the most critical problems we face today...
 
 It's 2024 and we can no longer trust the content we see on the internet. With the rise of AI-generated content, it's hard to distinguish between real and fake content. This project aims to solve this problem by detecting AI-generated text/content using a custom AI model trained on a large dataset.
 
@@ -10,18 +8,18 @@ This is an AI text/content detection program that makes use of a custom model tr
 
 [Snitch-GPT](https://snitch-gpt.vercel.app) ([Repo](https://github.com/jesvijonathan/Snitch-GPT-Frontend))
 
-## Setup
+## Demo
 
-To use this project, follow these steps:
+![Youtube Video](https://img.youtube.com/vi/1Q1Q1Q1Q1Q1/maxresdefault.jpg)
 
-### Prerequisites -
+## Prerequisites -
 
 - CUDA-enabled GPU
 - Python 3.10.6
 
-### Installation Steps -
+## Installation Steps -
 
-#### 1. Check CUDA Information
+### 1. Check CUDA Information
 
 Check and note down the CUDA information:
 
@@ -30,17 +28,17 @@ nvcc --version # or
 nvidia-smi
 ```
 
-#### 2. Install CUDA Driver Toolkit
+### 2. Install CUDA Driver Toolkit
 
 Download and install [CUDA driver toolkit](https://developer.nvidia.com/cuda-toolkit) if not installed already.
 (This Project also works with CPU, but it's recommended to use a CUDA-enabled GPU for better performance)
 
-#### 3. Install Python 3.10.6
+### 3. Install Python 3.10.6
 
 Download and install [Python 3.10.6](https://www.python.org/downloads/release/python-3106) if not installed already.
 (I recommend using this version for compatibility with the torch dependencies)
 
-#### 4. Clone Main Repository
+### 4. Clone Main Repository
 
 Clone the main repository & move into the directory:
 
@@ -49,7 +47,7 @@ git clone https://github.com/jesvijonathan/AI-Generated-Text-Detection
 cd AI-Generated-Text-Detection
 ```
 
-#### 5. Download Weights
+### 5. Download Weights
 
 Download the model [Weights](https://www.mediafire.com/file/7n4b2e1geeuzu69/weights.zip/file) (~9GB) from [here](https://www.mediafire.com/file/7n4b2e1geeuzu69/weights.zip/file) & extract them to the weights directory:
 
@@ -58,7 +56,7 @@ Download the model [Weights](https://www.mediafire.com/file/7n4b2e1geeuzu69/weig
 unzip weights.zip -d ./weights
 ```
 
-#### 6. Create and Activate Virtual Environment
+### 6. Create and Activate Virtual Environment
 
 Create and activate the virtual environment:
 
@@ -67,7 +65,7 @@ python -m venv env
 source env/bin/activate
 ```
 
-#### 7. Install Python Torch Dependencies
+### 7. Install Python Torch Dependencies
 
 Install CUDA/GPU version of [Python torch](https://pytorch.org/get-started/locally/) dependencies (check & replace link-version below with your CUDA version, e.g: v12.1 = 121):
 
@@ -75,7 +73,7 @@ Install CUDA/GPU version of [Python torch](https://pytorch.org/get-started/local
 python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 
-#### 8. Install Requirements
+### 8. Install Requirements
 
 Install project requirements:
 
@@ -83,7 +81,7 @@ Install project requirements:
 pip install -r packages.txt
 ```
 
-#### 9. Run the Application
+### 9. Run the Application
 
 Run the app.py file,
 (make sure to adjust the params in the config.py file):
@@ -92,7 +90,7 @@ Run the app.py file,
 python app.py
 ```
 
-#### 10. Clone Frontend Repository
+### 10. Clone Frontend Repository
 
 clone the frontend repository & move into the directory:
 
@@ -102,7 +100,7 @@ git clone https://github.com/jesvijonathan/Snitch-GPT-Frontend
 cd Snitch-GPT-Frontend
 ```
 
-#### 11. Install NPM Dependencies and Build App
+### 11. Install NPM Dependencies and Build App
 
 Install npm project dependencies and build the app:
 
@@ -111,7 +109,7 @@ npm install
 npm run build
 ```
 
-#### 12. Run Frontend Application
+### 12. Run Frontend Application
 
 Run the frontend application:
 
@@ -119,13 +117,13 @@ Run the frontend application:
 npm run dev
 ```
 
-#### 13. Open Application
+### 13. Open Application
 
 Open the application in your web browser:
 
 ```bash
 http://localhost:5173 # for App
-http://localhost:3000 # for API
+http://localhost:5000 # for API
 ```
 
 ## Notes
@@ -154,6 +152,21 @@ http://localhost:3000 # for API
 - The model is trained on a large custom dataset for the most accurate results. Results may not always be inaccurate, use at own risk.
 - I know most of it is speghetti code rn, but it works. Will refactor soon. 0_0
 
+## Features
+
+- Detect AI-generated text/content.
+- Score the content based on multiple parameters & the probability of being AI-generated.
+- Model trained on a broader/large dataset for the most accurate results.
+- Use of new multiple models & techniques to improve the accuracy of the model.
+- Interactive Web app interface to interact with the application.
+- API availability to integrate the application with other services.
+- Minimal & easy to use, can save research time.
+- Customizable parameters to adjust the model for better results.
+- Maximum efficiency by using max hardware resources for significant performance boosts & faster results.
+- Supports one shot detection & other checks.
+- ~300ms execution time for optimal cases.
+- many more...
+
 ## License
 
 - [MIT](https://choosealicense.com/licenses/mit/)
@@ -161,4 +174,22 @@ http://localhost:3000 # for API
 ## Contributors
 
 - [Jesvi Jonathan](jesvi22j@gmail.com)
--
+
+<!--
+- []()
+
+## Acknowledgements
+
+- [Hugging Face](https://huggingface.co/)
+- [PyTorch](https://pytorch.org/)
+- [DebertaModel]()
+- [DebertaModelv3]()
+- [SlimPajama]()
+- [AI GPT-4]()
+- [Kaggle]()
+- [Collab]()
+
+## Support
+
+- [PayPal](https://www.paypal.com/paypalme/jesvijonathan)
+  -->
