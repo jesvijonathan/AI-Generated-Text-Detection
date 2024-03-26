@@ -309,11 +309,13 @@ def model(model_paths_weights=paths_weights, random_sel=-1):
     return loaded_models    
 
     
-# import profanity_scorer as ps
+
 
 # def main():
+#     import profanity_scorer as ps
+
 #     zero_shot = True
-    
+
 #     while True:
 #         input("Press enter to process the text from input.txt")
 #         text = ""
@@ -330,30 +332,18 @@ def model(model_paths_weights=paths_weights, random_sel=-1):
 #         else:
 #             print_("\nZero shot : Negative (AI Generated)\n")
 #             evaluator.model_score(eval_tex["text_input"])
-
-
-def ml_process(text, socket_update_callback=None, user_id=None):
-    global ss
-    time.sleep(1)
-    if socket_update_callback and user_id:
-        socket_update_callback.emit('message', 'model 1 completed', room=user_id)
-    time.sleep(5)
-    if socket_update_callback and user_id:
-        socket_update_callback.emit('message', f'model 2 completed', room=user_id)
-    ss += text
-    return f"Processed: {ss}"
-
-
+ 
 
 print_()
 print_("\n")
 models = model(random_sel=random_sel)
 evaluator = ModelEvaluator(models, num_parallel=num_parallel)
 
-# main(use_dataset=False, num_parallel=2)
+
 
 # if __name__ == "__main__":
-#     main()
+#     main(use_dataset=False, num_parallel=2)
+#     main() # you can use this to test the model alone
 
 
 

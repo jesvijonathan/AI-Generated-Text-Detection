@@ -3,8 +3,8 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 import threading
 from queue import Queue
-import profanity_scorer as ps
-import main as mn
+import text_scorer as tex_score
+import ml_eval
 from utils import set_socketio_instance, print_, update_job_status, update_job_result, update_job_values
 from datetime import datetime, timedelta
 from config import *
@@ -55,8 +55,8 @@ def handle_ml_processing(data, user_id=None):
         return None  
     
 
-    eval_tex = ps.sentiment_analyzer.analyze_text(data)
-    ps.print_eval_text(eval_tex, user_id)
+    eval_tex = tex_score.sentiment_analyzer.analyze_text(data)
+    tex_score.print_eval_text(eval_tex, user_id)
 
 
     if eval_tex["res"] == None:
@@ -93,7 +93,7 @@ def handle_ml_processing(data, user_id=None):
         else:
             update_job_status(user_id=user_id, update={"progress": 0.3, "updates": ["Skipping Zero_Shot_Check"]}, job_id=data["job_id"])
         
-        result = mn.evaluator.model_score(eval_tex["text_input"], user_id=user_id,data=data)
+        result = ml_eval.evaluator.model_score(eval_tex["text_input"], user_id=user_id,data=data)
         update_job_status(user_id=user_id, update={"progress": 0.9, "updates": ["Wrapping up..."]}, job_id=data["job_id"])
 
         return {
@@ -340,3 +340,15 @@ def index():
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, use_reloader=False)
+
+
+# Run the server using the command: python app.py
+# Open the browser and go to the URL: http://localhost:5000/ or http://localhost:3000/
+
+# WebSocket Endpoints:
+# Connect: ws://localhost:5000/socket.io/
+# Disconnect: ws://localhost:5000/socket.io/
+# Values: ws://localhost:5000/socket.io/
+
+# HTTP Endpoint:
+# Index: http://localhost:5000/

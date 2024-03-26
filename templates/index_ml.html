@@ -1,91 +1,408 @@
-<!-- Do not use, Does not work, need to update | For testing -->
+<!-- 
+This is a very basic example of the project, please use the dedicated frontend for the project.
+Link : https://github.com/jesvijonathan/Snitch-GPT-Frontend
+  
+</script>
+
+    Exmaple input recieved : 
+
+    job_status : 
+    {
+  "progress": 1,
+  "updates": [
+    "Processing...",
+    "Inspecting text...",
+    "Cleaning text...",
+    "Analyzing text...",
+    "Checking for profanity...",
+    "Calculating text scores...",
+    "Analyzing sentiment...",
+    "Calculating final score...",
+    "Initial Analysis Completed",
+    "Zero_Shot_Check (Negative)",
+    "Model Evaluation started..",
+    "Evaluating models parallely in 2 threads..",
+    "Evaluating model 1...",
+    "Evaluating model 2...",
+    "Model 1 completed..",
+    "Model 2 completed..",
+    "Model evaluation completed..",
+    "Model Evaluation completed..",
+    "Wrapping up...",
+    "Processed successfully",
+    "Completed",
+    "The text is AI generated, with an 'AI-Written' Probability Score : (0.93)"
+  ],
+  "status": "Completed"
+}
+
+
+job_result : 
+{
+  "clean_text": "this line performs the same functionality as the original two lines it searches for the model name in the dataset models string representation and assigns it to modelname if found otherwise defaults to unknown",
+  "urls_score": 0,
+  "emoji_score": 0,
+  "specialChar_score": 0.20588235294117646,
+  "profanity_check": false,
+  "profanity_prob": 0.027414175301452005,
+  "profanity_score": 0.030155592831597206,
+  "text_score": 0.013725490196078431,
+  "textblob_score": {
+    "polarity": 0.09166666666666667,
+    "subjectivity": 0.4916666666666667
+  },
+  "vader_score": { "compound": 0.3182, "neu": 0.935, "pos": 0.065, "neg": 0 },
+  "sentiment_score": 0.09166666666666667,
+  "sentiment_label": "Neutral",
+  "one_shot_score": 0.12182225949826388,
+  "model_score": {
+    "models": [
+      {
+        "model": "Model (1: DebertaModel)",
+        "details": "DAIGTModel(\n (model): DebertaModel(\n (embeddings): DebertaEmbeddings(\n (word_embeddings): Embedding(50265, 1024, padding_idx=0)\n (LayerNorm): DebertaLayerNorm()\n (dropout): StableDropout()\n )\n (encoder): DebertaEncoder(\n (layer): ModuleList(\n (0-23): 24 x DebertaLayer(\n (attention): DebertaAttention(\n (self): DisentangledSelfAttention(\n (in_proj): Linear(in_features=1024, out_features=3072, bias=False)\n (pos_dropout): StableDropout()\n (pos_proj): Linear(in_features=1024, out_features=1024, bias=False)\n (pos_q_proj): Linear(in_features=1024, out_features=1024, bias=True)\n (dropout): StableDropout()\n )\n (output): DebertaSelfOutput(\n (dense): Linear(in_features=1024, out_features=1024, bias=True)\n (LayerNorm): DebertaLayerNorm()\n (dropout): StableDropout()\n )\n )\n (intermediate): DebertaIntermediate(\n (dense): Linear(in_features=1024, out_features=4096, bias=True)\n (intermediate_act_fn): GELUActivation()\n )\n (output): DebertaOutput(\n (dense): Linear(in_features=4096, out_features=1024, bias=True)\n (LayerNorm): DebertaLayerNorm()\n (dropout): StableDropout()\n )\n )\n )\n (rel_embeddings): Embedding(1024, 1024)\n )\n )\n (classifier): Linear(in_features=1024, out_features=1, bias=True)\n)",
+        "execution_type": "Parallel",
+        "score": 0.891338050365448,
+        "time": 1.5258047580718994,
+        "device": "GPU"
+      },
+      {
+        "model": "Model (2: DebertaV2Model)",
+        "details": "DAIGTModel(\n (model): DebertaV2Model(\n (embeddings): DebertaV2Embeddings(\n (word_embeddings): Embedding(128100, 1024, padding_idx=0)\n (LayerNorm): LayerNorm((1024,), eps=1e-07, elementwise_affine=True)\n (dropout): StableDropout()\n )\n (encoder): DebertaV2Encoder(\n (layer): ModuleList(\n (0-23): 24 x DebertaV2Layer(\n (attention): DebertaV2Attention(\n (self): DisentangledSelfAttention(\n (query_proj): Linear(in_features=1024, out_features=1024, bias=True)\n (key_proj): Linear(in_features=1024, out_features=1024, bias=True)\n (value_proj): Linear(in_features=1024, out_features=1024, bias=True)\n (pos_dropout): StableDropout()\n (dropout): StableDropout()\n )\n (output): DebertaV2SelfOutput(\n (dense): Linear(in_features=1024, out_features=1024, bias=True)\n (LayerNorm): LayerNorm((1024,), eps=1e-07, elementwise_affine=True)\n (dropout): StableDropout()\n )\n )\n (intermediate): DebertaV2Intermediate(\n (dense): Linear(in_features=1024, out_features=4096, bias=True)\n (intermediate_act_fn): GELUActivation()\n )\n (output): DebertaV2Output(\n (dense): Linear(in_features=4096, out_features=1024, bias=True)\n (LayerNorm): LayerNorm((1024,), eps=1e-07, elementwise_affine=True)\n (dropout): StableDropout()\n )\n )\n )\n (rel_embeddings): Embedding(512, 1024)\n (LayerNorm): LayerNorm((1024,), eps=1e-07, elementwise_affine=True)\n )\n )\n (classifier): Linear(in_features=1024, out_features=1, bias=True)\n)",
+        "execution_type": "Parallel",
+        "score": 0.9695759415626526,
+        "time": 7.341728210449219,
+        "device": "CPU"
+      }
+    ],
+    "model_avg": 0.9304569959640503,
+    "execution_time": 7.354729413986206
+  },
+  "score": 0.9304569959640503,
+  "device": "Mix",
+  "parallel": 2,
+  "max_length": 768,
+  "max_memory": 0
+}
+
+  job_values : // for now the below values are not changing and aer dummy 
+  {
+  "text": "This line performs the same functionality as the original two lines: it searches for the model name in the dataset model's string representation and assigns it to model_name if found, otherwise defaults to 'Unknown'.",
+  "zero_shot": false,
+  "text_check": true,
+  "url_ratio_check": true,
+  "emoji_ratio_check": true,
+  "specialChar_ratio_check": true,
+  "model_check": true,
+  "random_seed": 0,
+  "models": -1,
+  "parallel": -1
+}
+
+
+server_status : 
+{
+  status: "Unknown", // Unknown, Connected, Disconnected, Free, Busy, Connecting
+  no_jobs: 0, // Number of Jobs in queue
+  no_connections: 0, // Number of connections
+}
+
+user_info :
+{
+  user_id: 0, // User ID
+  user_no: 0, // User Number
+  jobs: [], // User's Jobs
+}
+
+  
+   -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ML Processing</title>
-    <style>
-      #status_indicator {
-        margin-top: 10px;
-        font-weight: bold;
-      }
-    </style>
+    <title>Socket.IO Client</title>
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
   </head>
   <body>
-    <h1>ML Processing</h1>
-    <div id="status_indicator">Server Status: Unknown</div>
-    <ul id="messages"></ul>
-    <form onsubmit="sendMessage(); return false;">
-      <input id="message_input" autocomplete="off" />
+    <div id="status"></div>
+    <form id="form" action="javascript:void(0)" onsubmit="sendMessage()">
+      <input
+        id="messageInput"
+        autocomplete="off"
+        placeholder="Type a message..."
+        type="text"
+        autofocus
+      />
       <button type="submit">Send</button>
     </form>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <div id="console"></div>
+
     <script>
-      var socket = io.connect(
-        "http://" + document.domain + ":" + location.port
-      );
+      let con = document.getElementById("console");
+      var loc = "http://127.0.0.1:5000/";
+      var server_status = document.getElementById("status");
+      var messageInput = document.getElementById("messageInput");
+      var socket = io.connect(loc);
 
-      socket.on("server_status", function (data) {
-        var statusIndicator = document.getElementById("status_indicator");
-        var ul = document.getElementById("messages");
+      socket.on("connect", function () {
+        server_status.innerText = "Connected";
+      });
 
-        statusIndicator.textContent = "Server Status: " + data.status;
-
-        li = document.createElement("li");
-        li.appendChild(
-          document.createTextNode("Number of Users: " + data.no_of_users)
-        );
-        ul.appendChild(li);
+      socket.on("disconnect", function () {
+        server_status.innerText = "Disconnected";
       });
 
       socket.on("user_info", function (data) {
-        var ul = document.getElementById("messages");
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode("User ID: " + data.user_id));
-        ul.appendChild(li);
-
-        li = document.createElement("li");
-        li.appendChild(document.createTextNode("User Number: " + data.user_no));
-        ul.appendChild(li);
-
-        li = document.createElement("li");
-
-        if (data.jobs) {
-          var jobs = data.jobs;
-          var jobsStr = "Jobs: ";
-          for (var i = 0; i < jobs.length; i++) {
-            jobsStr += "Job " + (i + 1) + ": " + jobs[i] + ", ";
-          }
-          li.appendChild(document.createTextNode(jobsStr));
-        } else {
-          li.appendChild(document.createTextNode("Jobs: None"));
-        }
-        ul.appendChild(li);
-
-        li = document.createElement("li");
-        li.appendChild(document.createTextNode("Connected: " + data.connected));
-        ul.appendChild(li);
-
         console.log(data);
+        con.innerHTML += "\nUser Info: " + JSON.stringify(data) + "<br>";
       });
 
-      socket.on("message", function (msg) {
-        var ul = document.getElementById("messages");
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(msg));
-        ul.appendChild(li);
+      function check_add_job_values(data) {
+        if (data == undefined) {
+          return;
+        }
+        for (let key in default_job_values) {
+          if (key in data) {
+            jobs_value[key] = data[key];
+          }
+        }
+      }
 
-        console.log(msg);
+      const default_job_values = {
+        text: "", // Text
+        zero_shot: false, // Zero Shot
+        text_check: true, // Text Check
+        url_ratio_check: true, // URL Ratio Check
+        emoji_ratio_check: true, // Emoji Check
+        specialChar_ratio_check: true, // Special Char Check
+        model_check: true, // Model Check
+        random_seed: 0, // Random Seed | 0 default/none
+        models: -1, // Model | -1 default
+        parallel: -1, // Parallel | -1 default
+      };
+
+      let job_values = {
+        text: "", // Text
+        zero_shot: false, // Zero Shot
+        text_check: true, // Text Check
+        url_ratio_check: true, // URL Ratio Check
+        emoji_ratio_check: true, // Emoji Check
+        specialChar_ratio_check: true, // Special Char Check
+        model_check: true, // Model Check
+        random_seed: 0, // Random Seed | 0 default/none
+        models: -1, // Model | -1 default
+        parallel: -1, // Parallel | -1 default
+      };
+
+      socket.on("job_values", function (data) {
+        con.innerHTML += "\nServer Status: " + JSON.stringify(data) + "<br>";
+        check_add_job_values(data.job_values);
+        console.log("JOB values : ", job_values);
       });
+
+      function check_add_job_status(data) {
+        if (data == undefined) {
+          return;
+        }
+
+        for (let key in default_job_status) {
+          if (key in data) {
+            if (key == "updates") {
+              for (let update of data[key]) {
+                if (!job_status[key].includes(update)) {
+                  job_status[key].push(update);
+                }
+              }
+            } else {
+              job_status[key] = data[key];
+            }
+          }
+        }
+      }
+      const default_job_status = {
+        progress: 0,
+        updates: [], // Job Updates
+        status: "Pending", // Pending, Processing, Completed, Failed
+      };
+
+      let job_status = {
+        progress: 0,
+        updates: [], // Job Updates
+        status: "Pending", // Pending, Processing, Completed, Failed
+      };
+
+      socket.on("job_status", function (data) {
+        con.innerHTML += "\nJob Status: " + JSON.stringify(data) + "<br>";
+        check_add_job_status(data.job_status);
+        if (job_status.progress == 1) {
+          con.innerHTML +=
+            "<pre>" +
+            JSON.stringify(
+              {
+                "job status": job_status,
+                "job result": job_result,
+                "job values": job_values,
+              },
+              null,
+              2
+            ) +
+            "</pre><br>";
+        }
+        console.log("JOB status : ", job_status);
+      });
+
+      function check_add_job_result(data) {
+        if (data == undefined) {
+          return;
+        }
+        for (let key in default_job_result) {
+          if (key in data) {
+            job_result[key] = data[key];
+          }
+        }
+      }
+
+      const default_job_result = {
+        clean_text: "", // Clean Text
+        urls_score: 0, // URL Score
+        emoji_score: 0, // Emoji Score
+        specialChar_score: 0, // Special Char Score
+        text_score: 0, // Text Score
+
+        textblob_score: {
+          polarity: 0, // Polarity
+          subjectivity: 0, // Subjectivity
+        },
+
+        vader_score: {
+          pos: 0, // Positive
+          neg: 0, // Negative
+          neu: 0, // Neutral
+          compound: 0, // Compound
+        },
+        sentiment_score: 0, // Sentiment Score
+        sentiment_label: "", // Sentiment Label
+
+        profanity_check: false, // Profanity Check
+        profanity_prob: 0, // Profanity Probability
+        profanity_score: 0, // Profanity Score
+
+        one_shot_score: 0, // One Shot Score
+
+        model_score: {
+          model_avg: 0, // Model Average
+          execution_time: 0, // Execution Time
+          models: [
+            {
+              model: "", // Model
+              details: "", // Details
+              execution_type: "", // Execution Type
+              score: 0, // Score
+              time: 0, // Time
+              device: "", // Device
+            },
+          ],
+        },
+
+        score: 0, // Score
+
+        device: "", // Devices
+        parallel: 0, // max_parallel
+        max_length: 0, // Max Length
+        max_memory: 0, // Max Memory
+        execution_time: 0, // Time
+      }; // Job Result
+
+      let job_result = {
+        clean_text: "", // Clean Text
+        urls_score: 0, // URL Score
+        emoji_score: 0, // Emoji Score
+        specialChar_score: 0, // Special Char Score
+        text_score: 0, // Text Score
+
+        textblob_score: {
+          polarity: 0, // Polarity
+          subjectivity: 0, // Subjectivity
+        },
+
+        vader_score: {
+          pos: 0, // Positive
+          neg: 0, // Negative
+          neu: 0, // Neutral
+          compound: 0, // Compound
+        },
+        sentiment_score: 0, // Sentiment Score
+        sentiment_label: "", // Sentiment Label
+
+        profanity_check: false, // Profanity Check
+        profanity_prob: 0, // Profanity Probability
+        profanity_score: 0, // Profanity Score
+
+        one_shot_score: 0, // One Shot Score
+
+        model_score: {
+          model_avg: 0, // Model Average
+          execution_time: 0, // Execution Time
+          models: [
+            {
+              model: "", // Model
+              details: "", // Details
+              execution_type: "", // Execution Type
+              score: 0, // Score
+              time: 0, // Time
+              device: "", // Device
+            },
+          ],
+        },
+
+        score: 0, // Score
+
+        device: "", // Devices
+        parallel: 0, // max_parallel
+        max_length: 0, // Max Length
+        max_memory: 0, // Max Memory
+        execution_time: 0, // Time
+      }; // Job Result
+
+      socket.on("job_result", function (data) {
+        con.innerHTML += "\nJob Result: " + JSON.stringify(data) + "<br>";
+        check_add_job_result(data.job_result);
+        console.log("JOB result : ", job_result);
+      });
+
+      socket.on("job", function (data) {
+        con.innerHTML += "\nJob: " + JSON.stringify(data) + "<br>";
+      });
+
+      function clearInput() {
+        messageInput.value = "";
+      }
 
       function sendMessage() {
-        var messageInput = document.getElementById("message_input");
-        var message = messageInput.value;
-        socket.emit("message", message);
-        messageInput.value = "";
+        job_status = default_job_status;
+        job_result = default_job_result;
+        job_values = default_job_values;
+
+        job_values.text = messageInput.value;
+
+        con.innerHTML += "<br>Message: " + messageInput.value + "<br>";
+        socket.emit("values", {
+          job_id: 0,
+          user_id: 0,
+          job_name: "", // Job Name
+          job_status: {
+            progress: 0,
+            updates: [], // Job Updates
+            status: "Pending", // Pending, Processing, Completed, Failed
+          },
+          job_values: { ...job_values }, // Job Values
+
+          job_result: null,
+        });
+
+        clearInput();
       }
     </script>
   </body>
