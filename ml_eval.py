@@ -110,7 +110,25 @@ class ModelEvaluator:
         update_job_result(user_id=self.user_id, update=job_res, job_id=self.data["job_id"])
         update_job_status(user_id=self.user_id, update={"progress": 0.8, "updates": ["Model Evaluation completed.."]}, job_id=self.data["job_id"])
         
-        return self.avg_pred_prob
+        try:
+            job_res = {
+            'score': self.avg_pred_prob,
+            'device': 'GPU' if all(next(model.model.parameters()).is_cuda for model in self.models) else 'CPU' if all(not next(model.model.parameters()).is_cuda for model in self.models) else 'Mix',
+            'parallel': self.num_parallel,
+            'max_length': max_len,
+            'max_memory': 0,
+            "model_score": {
+                "models": self.job_res_model,
+                "model_avg": self.avg_pred_prob,
+                "execution_time": time.time() - self.total_start_time,
+            },
+        }
+        except:
+            job_res = {
+            'score': self.avg_pred_prob,
+        }
+            
+        return self.avg_pred_prob, job_res
 
     def _evaluate_serial(self, custom_text, pred_probs):
         print_("Evaluating models serially...")

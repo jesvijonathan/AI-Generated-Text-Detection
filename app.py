@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, jsonify
 from flask_socketio import SocketIO
 from flask_cors import CORS
 import threading
@@ -7,8 +7,11 @@ import text_scorer as tex_score
 import ml_eval
 from utils import set_socketio_instance, print_, update_job_status, update_job_result, update_job_values
 from datetime import datetime, timedelta
+import time
 from config import *
 import traceback
+import hashlib
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -58,6 +61,8 @@ def handle_ml_processing(data, user_id=None):
     eval_tex = tex_score.sentiment_analyzer.analyze_text(data)
     tex_score.print_eval_text(eval_tex, user_id)
 
+    print("##################", eval_tex, "##################")
+
 
     if eval_tex["res"] == None:
         print_("\nZero shot: Positive (Human Generated)\n", room=user_id)
@@ -70,7 +75,8 @@ def handle_ml_processing(data, user_id=None):
         return {
             "score": (0.0),
             "label": "Negative",
-            "text": "None"
+            "text_input": "None",
+            **eval_tex,
         }
     elif (eval_tex["res"] >= zero_shot_thresh and zero_shot):
         print_("\nZero shot: Positive (Human Generated)\n", room=user_id)
@@ -84,7 +90,7 @@ def handle_ml_processing(data, user_id=None):
         return {
             "score": (1.0 - float(eval_tex["res"])),
             "label": "Negative",
-            "text": eval_tex["text_input"]
+            **eval_tex,
         }
     else:
         print_("\nZero shot: Negative (AI Generated)\n", room=user_id)
@@ -93,14 +99,15 @@ def handle_ml_processing(data, user_id=None):
         else:
             update_job_status(user_id=user_id, update={"progress": 0.3, "updates": ["Skipping Zero_Shot_Check"]}, job_id=data["job_id"])
         
-        result = ml_eval.evaluator.model_score(eval_tex["text_input"], user_id=user_id,data=data)
+        score, result = ml_eval.evaluator.model_score(eval_tex["text_input"], user_id=user_id,data=data)
         update_job_status(user_id=user_id, update={"progress": 0.9, "updates": ["Wrapping up..."]}, job_id=data["job_id"])
 
         return {
-            "score": float(result),
-            "label": "Negative" if result >= 0.7 else "Positive" if result <= 0.55 else "Neutral",
-            "text": eval_tex["text_input"]
-        }
+            "score": float(score),
+            "label": "Negative" if score >= 0.7 else "Positive" if score <= 0.55 else "Neutral",
+            **eval_tex,
+            **result 
+            }
 
 
 """
@@ -338,9 +345,128 @@ def handle_message(values):
 def index():
     return render_template('index_ml.html')
 
+req_users = []
+
+def generate_user_id():
+    if 'user_id' in session:
+        return session['user_id']
+    else:
+        user = request.remote_addr + str(datetime.now())
+        user_id = hashlib.md5(user.encode()).hexdigest()[:8]
+        session['user_id'] = user_id
+        return user_id
+
+def error_response(message="Error", status_code=400):
+    return {
+            "message": message,
+        }, status_code
+
+@app.route('/api/job', methods=['GET', 'POST'])
+def process_jobs():
+    if request.method == 'GET':
+        data = request.args.to_dict()
+    elif request.method == 'POST':
+        if request.headers.get('Content-Type') != 'application/json':
+            return error_response("Invalid Content-Type", 400)
+        data = request.json
+
+    user_id = data.get("user_id")
+    if user_id not in req_users: 
+        return error_response("Invalid User", 400)
+
+    text = data.get("text")
+    if not text:
+        return error_response("Invalid Text", 400)
+
+    job_id = 0
+    job_data = {
+        "job_id": job_id,
+        "user_id": user_id,
+        "job_name": "",
+        "job_status": {
+            "progress": 0,
+            "updates": [],
+            "status": "Pending",
+        },
+        "job_values": {
+            "text": text,
+            "zero_shot": False,
+            "text_check": True,
+            "url_ratio_check": True,
+            "emoji_ratio_check": True,
+            "specialChar_ratio_check": True,
+            "model_check": True,
+            "random_seed": 0,
+            "models": -1,
+            "parallel": -1,
+        },
+        "job_result": {
+            "clean_text": "",
+            "urls_score": 0,
+            "emoji_score": 0,
+            "specialChar_score": 0,
+            "text_score": 0,
+            "textblob_score": {
+                "polarity": 0,
+                "subjectivity": 0,
+            },
+        },
+    } 
+
+    user_activity_timestamps[user_id] = datetime.now()
+    result = handle_ml_processing(job_data, user_id)
+    if result:
+        return jsonify(result), 200
+    else:
+        return error_response("Failed to process the request", 500)
+
+@app.route('/api/token', methods=['GET'])
+def generate_token():
+    user_id = generate_user_id()
+    req_users.append(user_id)
+    print("Total users:", len(req_users), "User ID:", user_id)
+    return {"user_id": user_id}, 200
+
+@app.route('/api/remove', methods=['GET'])
+def remove_user():
+    user_id = request.args.get('user_id')
+    if user_id in req_users:
+        req_users.remove(user_id)
+        return {"message": "User removed successfully"}, 200
+    else:
+        return error_response("User not found", 404)
+    
+@app.route('/api', methods=['GET', 'POST'])
+def api():
+    return {
+            "message": "AI GENERATED TEXT DETECTION API",
+            "title": "AI Generated Text Detection API",
+            "description": "API to detect AI generated text using various NLP techniques and models.",
+            "source": "https://github.com/jesvijonathan/AI-Generated-Text-Detection",
+            "version": "0.1.2",
+            "author": "Jesvi Jonathan",
+            "endpoints": {
+                "/api/job": {
+                    "method": "GET/POST",
+                    "description": "Process the job for the user",
+                    "data": {
+                        "user_id": "User ID",
+                        "text": "Text data to process"
+                    },
+                    "response": "JSON Object with the result of the job"
+                },
+                "/api/token": {
+                    "method": "GET",
+                    "description": "Generate a new user token",
+                    "response": "JSON Object with the user_id token"
+                }
+            },
+
+        }, 200
+
+
 if __name__ == '__main__':
     socketio.run(app, debug=True, use_reloader=False)
-
 
 # Run the server using the command: python app.py
 # Open the browser and go to the URL: http://localhost:5000/ or http://localhost:3000/
@@ -352,3 +478,9 @@ if __name__ == '__main__':
 
 # HTTP Endpoint:
 # Index: http://localhost:5000/
+# Token: http://localhost:5000/api/token
+# Jobs: http://localhost:5000/api/job
+    # GET: http://localhost:5000/api/job?user_id=ef933904&text=hello%20world%20jesvi
+    # POST: http://localhost:5000/api/job {"user_id": "ef933904", "text": "hello world jesvi"}
+# Remove User: http://localhost:5000/api/remove
+    # GET: http://localhost:5000/api/remove?user_id=ef933904
