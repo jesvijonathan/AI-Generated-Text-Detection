@@ -361,26 +361,9 @@ def error_response(message="Error", status_code=400):
             "message": message,
         }, status_code
 
-@app.route('/api/job', methods=['GET', 'POST'])
-def process_jobs():
-    if request.method == 'GET':
-        data = request.args.to_dict()
-    elif request.method == 'POST':
-        if request.headers.get('Content-Type') != 'application/json':
-            return error_response("Invalid Content-Type", 400)
-        data = request.json
-
-    user_id = data.get("user_id")
-    if user_id not in req_users: 
-        return error_response("Invalid User", 400)
-
-    text = data.get("text")
-    if not text:
-        return error_response("Invalid Text", 400)
-
-    job_id = 0
+def generate_job_data(job_num, user_id, text):
     job_data = {
-        "job_id": job_id,
+        "job_id": job_num,
         "user_id": user_id,
         "job_name": "",
         "job_status": {
@@ -411,7 +394,28 @@ def process_jobs():
                 "subjectivity": 0,
             },
         },
-    } 
+    }
+    return job_data
+
+
+@app.route('/api/job', methods=['GET', 'POST'])
+def process_jobs():
+    if request.method == 'GET':
+        data = request.args.to_dict()
+    elif request.method == 'POST':
+        if request.headers.get('Content-Type') != 'application/json':
+            return error_response("Invalid Content-Type", 400)
+        data = request.json
+
+    user_id = data.get("user_id")
+    if user_id not in req_users: 
+        return error_response("Invalid User", 400)
+
+    text = data.get("text")
+    if not text:
+        return error_response("Invalid Text", 400)
+
+    job_data = generate_job_data(0, user_id, text)
 
     user_activity_timestamps[user_id] = datetime.now()
     result = handle_ml_processing(job_data, user_id)
@@ -465,11 +469,43 @@ def api():
         }, 200
 
 
+def run_local():
+    job_num = 0
+
+    while True:
+        input("Press enter to process the text from input.txt")
+        try:
+            with open('data/input.txt', 'r') as file:
+                text = file.read().strip()
+                if not text:
+                    print("Invalid Text")
+                    continue
+
+            user_id = job_num
+            job_data = generate_job_data(job_num, user_id, text)
+
+            user_activity_timestamps[user_id] = datetime.now()
+            result = handle_ml_processing(job_data, user_id)
+            if result:
+                print(result)
+                # Perform actions with the result here
+            else:
+                print("Failed to process the request | None")
+
+            job_num += 1
+        except Exception as e:
+            print("An error occurred:", str(e))
+            traceback.print_exc()
+
+
 if __name__ == '__main__':
-    socketio.run(app, debug=True, use_reloader=False)
+    if local_mode:
+        run_local()
+    else:
+        socketio.run(app, debug=debug_mode, use_reloader=use_reloader, host=host, port=port, log_output=log_output)
 
 # Run the server using the command: python app.py
-# Open the browser and go to the URL: http://localhost:5000/ or http://localhost:3000/
+# Open the browser and go to the URL: http://localhost:5000/
 
 # WebSocket Endpoints:
 # Connect: ws://localhost:5000/socket.io/

@@ -2,7 +2,7 @@
 max_len = 768 # recommended 512 or 768
 sortby="Sno" # ["Sno", "Model", "Device", "Prediction", "Execution Time"]
 
-random_sel = -1 # -1 for all available, else number of random samples to select
+random_sel = 1 # -1 for all available, else number of random samples to select
 
 # more than 1 will also increase memory usage, adjust accordingly..
 num_parallel = 2 # 1 for sequential, 2 or more for parallel
@@ -47,5 +47,12 @@ check_text_score = True
 # result_text_thresh = [0.5, 0.27, 0.4] # AI | Human | Likely Human | Updataed to work on memory based chat
 result_text_thresh = [0.7, 0.27, 0.55] # AI | Human | Likely Human
 
+debug_mode = False
+use_reloader = False
+log_output = True
+host="0.0.0.0"
+port=5000
+
 user_session_timeout = 5 # in minutes
 
+local_mode = False # True for local mode, False for server mode | local mode for using in console, jupyter etc
