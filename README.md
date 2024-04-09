@@ -123,7 +123,8 @@ Open the application in your web browser:
 
 ```bash
 http://localhost:5173 # for App
-http://localhost:5000 # for API
+http://localhost:5000 # for Legacy App
+http://localhost:5000/api # for API
 ```
 
 ## Notes
@@ -148,7 +149,7 @@ http://localhost:5000 # for API
   <br>
 - This project works best with text with more than 250 characters & is trained on lengthy texts & using bert/DebertaModel along with 3M GPT-4 Data.
 - Use this project along with the frontend interface intended to use with this project, which has visualization & more | [Snitch-GPT](https://snitch-gpt.vercel.app)
-- Adjust the params in the config.py file best, as per need
+- Adjust the params in the config.py file best, as per need (You will have to modify the default params).
 - The model is trained on a large custom dataset for the most accurate results. Results may not always be inaccurate, use at own risk.
 - I know most of it is speghetti code rn, but it works. Will refactor soon. 0_0
 
@@ -166,6 +167,28 @@ http://localhost:5000 # for API
 - Supports one shot detection & other checks.
 - ~300ms execution time for optimal cases.
 - many more...
+
+## Endpoints
+
+- <b>Legacy App Endpoint:</b>
+
+  - http://localhost:5000/ - Home Page
+
+- <b>WebSocket Endpoints:</b>
+
+  - ws://localhost:5000/socket.io/ - Connect to the WebSocket
+  - ws://localhost:5000/socket.io/ - Disconnect from the WebSocket
+  - ws://localhost:5000/socket.io/ - Get the values from the WebSocket
+
+- <b>Http (API) Endpoints:</b>
+  - http://localhost:5000/api/ - API Home Page
+  - http://localhost:5000/api/token - Get the token from the API
+  - http://localhost:5000/api/remove - Remove the token from the API
+  - http://localhost:5000/api/job - Get/Post Job requests
+    - GET: http://localhost:5000/api/job?user_id=ef933904&text=hello%20world%20jesvi
+    - POST: http://localhost:5000/api/job {"user_id": "ef933904", "text": "hello world jesvi"}
+- <b>Sntich GPT App Endpoints:</b>
+  - Please refer Snitch-GPT [Docs](<[www.google.com](https://github.com/jesvijonathan/Snitch-GPT-Frontend)>)
 
 ## License
 
