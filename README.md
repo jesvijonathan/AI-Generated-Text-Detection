@@ -10,7 +10,9 @@ This is an AI text/content detection program that makes use of a custom model tr
 
 ## Demo
 
-![Youtube Video](https://img.youtube.com/vi/1Q1Q1Q1Q1Q1/maxresdefault.jpg)
+[![Youtube Video](https://img.youtube.com/vi/Tp92F55QPuQ/0.jpg)](https://www.youtube.com/watch?v=Tp92F55QPuQ&ab_channel=JesviJonathan) <5mins
+
+[Full Walkthrough](https://www.youtube.com/watch?v=j6Zg6sLwkoc&t=54s&ab_channel=JesviJonathan) >5mins
 
 ## Prerequisites -
 
