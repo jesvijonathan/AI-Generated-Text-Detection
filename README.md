@@ -1,4 +1,4 @@
-# AI-Generated-Text-Detection
+# AI-Generated-Text-Detection (Snitch-GPT)
 
 This is most relavant project in the current era and the future, as this project aims to solve one of the most critical problems we face today...
 
